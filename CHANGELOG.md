@@ -20,4 +20,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A single `.code-workspace` file containing all repository VS Code settings, extensions, tasks,
   status-bar buttons, inputs, and debug profiles; `.vscode/` remains ignored for user overrides.
 
+### Fixed
+
+- Inline-code contrast in the generated documentation when the operating system prefers dark
+  colors.
+
 [Unreleased]: https://github.com/ascillato/full-template-for-cpp-project-repository/commits/main
