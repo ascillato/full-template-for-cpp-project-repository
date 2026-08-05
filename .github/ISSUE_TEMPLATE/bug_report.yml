@@ -1,0 +1,116 @@
+name: Bug report
+description: Report a reproducible defect in the repository template
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the template. Search existing issues first and do not include
+        credentials, proprietary SDK contents, or vulnerability details. Report security issues
+        through the private link in SECURITY.md.
+
+  - type: input
+    id: revision
+    attributes:
+      label: Template version or revision
+      description: Provide a release tag or commit SHA.
+      placeholder: v0.1.0 or 0123456789abcdef
+    validations:
+      required: true
+
+  - type: dropdown
+    id: preset
+    attributes:
+      label: Build preset
+      description: Select the closest preset involved in the failure.
+      options:
+        - dev
+        - release
+        - analysis
+        - coverage
+        - sanitizers
+        - arm64-release
+        - armv7-release
+        - Vendor or user preset
+        - Not applicable
+    validations:
+      required: true
+
+  - type: input
+    id: host
+    attributes:
+      label: Build host
+      description: Include operating system, release, and CPU architecture.
+      placeholder: Ubuntu 24.04, x86_64
+    validations:
+      required: true
+
+  - type: input
+    id: toolchain
+    attributes:
+      label: Compiler and CMake versions
+      placeholder: GCC 14.2.0 and CMake 3.31.6
+    validations:
+      required: true
+
+  - type: textarea
+    id: target
+    attributes:
+      label: Target environment
+      description: For cross-build issues, include architecture, SDK, libc, sysroot arrangement, and board. Write "Native" otherwise.
+      placeholder: AArch64, Yocto SDK 5.x, glibc, EMBEDDED_SYSROOT=/opt/sdk/sysroots/target
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest sequence that reproduces the issue from a clean build directory.
+      placeholder: |
+        1. Run `cmake --preset dev`.
+        2. Run `cmake --build --preset dev`.
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant diagnostic output
+      description: Paste text, not screenshots. Remove secrets and private paths.
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Include minimal code, configuration, or links that help isolate the defect.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and discussions for this problem.
+          required: true
+        - label: I reproduced the issue with generated build output removed.
+          required: true
+        - label: This report does not contain a security vulnerability or sensitive information.
+          required: true

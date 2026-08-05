@@ -1,69 +1,82 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
-
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Build directories
-build/
-Build/
-build-*/
-
-# CMake generated files
+# CMake and build outputs
+/build/
+/Build/
+/build-*/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
 install_manifest.txt
 compile_commands.json
+CTestTestfile.cmake
+Testing/
+_deps/
 
-# Temporary files
-*.tmp
-*.log
+# Compilers, linkers, and debuggers
+*.d
+*.dwo
+*.gch
+*.ilk
+*.lai
+*.lo
+*.mod
+*.o
+*.obj
+*.pch
+*.pdb
+*.slo
+*.smod
+*.a
+*.app
+*.dll
+*.dylib
+*.exe
+*.lib
+*.out
+*.so
+*.so.*
+
+# Coverage, analysis, and generated documentation
+*.gcda
+*.gcno
+*.gcov
+*.profdata
+*.profraw
+/coverage/
+/docs/_build/
+/.cache/
+/.clangd/
+/.VSCodeCounter/
+
+# Conan and package-manager output
+/CMakeUserPresets.json
+/test_package/CMakeUserPresets.json
+/test_package/build/
+/conan.lock.local
+/generators/
+/vcpkg_installed/
+
+# Python
+/.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Editors and operating systems
+/.vscode/
+.DS_Store
+Thumbs.db
 *.bak
 *.swp
+*.tmp
+*~
 
-# vcpkg
-vcpkg_installed/
+# Local deployment and SDK material
+/.env
+/sysroots/
+/sdk/
+/cmake/toolchains/custom-sdk.cmake
 
-# debug information files
-*.dwo
-
-# test output & cache
-Testing/
-.cache/
+# Keep the repository's hand-written Make facade tracked.
+!/Makefile

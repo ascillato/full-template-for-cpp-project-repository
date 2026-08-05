@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://ascillato.github.io/full-template-for-cpp-project-repository/
+    about: Read setup, development, cross-compilation, testing, and tooling guides.
+  - name: Questions and support
+    url: https://github.com/ascillato/full-template-for-cpp-project-repository/discussions
+    about: Ask for help adapting or using the template.
+  - name: Private security report
+    url: https://github.com/ascillato/full-template-for-cpp-project-repository/security/advisories/new
+    about: Report suspected vulnerabilities without disclosing them publicly.

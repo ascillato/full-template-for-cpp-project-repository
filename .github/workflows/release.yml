@@ -1,0 +1,133 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing v-prefixed tag to package
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+  CMAKE_BUILD_PARALLEL_LEVEL: "2"
+
+jobs:
+  package:
+    name: Package release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Validate tag name
+        run: |
+          if [[ ! "${RELEASE_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Expected a vMAJOR.MINOR.PATCH tag, received: ${RELEASE_TAG}" >&2
+            exit 1
+          fi
+
+      - name: Check out release tag
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            build-essential \
+            cmake \
+            g++-aarch64-linux-gnu \
+            g++-arm-linux-gnueabihf \
+            gcc-aarch64-linux-gnu \
+            gcc-arm-linux-gnueabihf \
+            ninja-build
+
+      - name: Build and test the release commit
+        run: make test PRESET=ci
+
+      - name: Build release packages
+        run: make package cross-arm64 cross-armv7
+
+      - name: Test the staged native package from a downstream project
+        run: make consumer-test
+
+      - name: Verify package version matches tag
+        run: |
+          package_version="${RELEASE_TAG#v}"
+          for preset in release arm64-release armv7-release; do
+            package_file="$(find "build/${preset}/packages" \
+              -maxdepth 1 \
+              -type f \
+              -name "*-${package_version}-*.tar.gz" \
+              -print \
+              -quit)"
+            if [[ -z "${package_file}" ]]; then
+              echo "No ${preset} package matches ${RELEASE_TAG}. Update the CMake project version before tagging." >&2
+              exit 1
+            fi
+          done
+
+      - name: Collect release assets
+        run: |
+          cmake -E make_directory build/release-assets
+          cp build/release/packages/*.tar.gz build/release-assets/
+          cp build/arm64-release/packages/*.tar.gz build/release-assets/
+          cp build/armv7-release/packages/*.tar.gz build/release-assets/
+
+      - name: Create SHA-256 checksums
+        run: |
+          cd build/release-assets
+          find . -type f ! -name SHA256SUMS -printf '%P\0' \
+            | sort --zero-terminated \
+            | xargs --null --no-run-if-empty sha256sum > SHA256SUMS
+          test -s SHA256SUMS
+          sha256sum --check SHA256SUMS
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ env.RELEASE_TAG }}
+          path: build/release-assets
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    name: Publish GitHub release
+    needs: package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download release packages
+        uses: actions/download-artifact@v8
+        with:
+          name: release-${{ env.RELEASE_TAG }}
+          path: build/release-assets
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_TAG}" build/release-assets/* --clobber
+          else
+            gh release create "${RELEASE_TAG}" \
+              build/release-assets/* \
+              --generate-notes \
+              --title "${RELEASE_TAG}" \
+              --verify-tag
+          fi

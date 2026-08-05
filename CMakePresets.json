@@ -1,0 +1,197 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/build/${presetName}/stage",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "CMAKE_INSTALL_MESSAGE": "LAZY",
+        "EMBEDDED_LINUX_TEMPLATE_BUILD_APP": true,
+        "EMBEDDED_LINUX_TEMPLATE_BUILD_DOCS": false,
+        "EMBEDDED_LINUX_TEMPLATE_WARNINGS_AS_ERRORS": false
+      }
+    },
+    {
+      "name": "dev",
+      "displayName": "Native development",
+      "description": "Debug host build with tests and compile commands",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": true
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Native release",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_TESTING": false,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_IPO": true
+      }
+    },
+    {
+      "name": "analysis",
+      "displayName": "Static analysis",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": false,
+        "EMBEDDED_LINUX_TEMPLATE_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "coverage",
+      "displayName": "Native coverage",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": true,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_COVERAGE": true,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_HARDENING": false
+      }
+    },
+    {
+      "name": "sanitizers",
+      "displayName": "Address and undefined behavior sanitizers",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": true,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_ASAN": true,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_UBSAN": true,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_HARDENING": false
+      }
+    },
+    {
+      "name": "docs",
+      "displayName": "Documentation",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": false,
+        "EMBEDDED_LINUX_TEMPLATE_BUILD_APP": false,
+        "EMBEDDED_LINUX_TEMPLATE_BUILD_DOCS": true
+      }
+    },
+    {
+      "name": "ci",
+      "displayName": "Continuous integration",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": true,
+        "EMBEDDED_LINUX_TEMPLATE_WARNINGS_AS_ERRORS": true,
+        "EMBEDDED_LINUX_TEMPLATE_USE_CCACHE": false
+      }
+    },
+    {
+      "name": "arm64-release",
+      "displayName": "ARM64 embedded Linux release",
+      "inherits": "release",
+      "toolchainFile": "${sourceDir}/cmake/toolchains/aarch64-linux-gnu.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "BUILD_TESTING": false,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_IPO": false
+      }
+    },
+    {
+      "name": "armv7-release",
+      "displayName": "ARMv7 hard-float embedded Linux release",
+      "inherits": "release",
+      "toolchainFile": "${sourceDir}/cmake/toolchains/arm-linux-gnueabihf.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "BUILD_TESTING": false,
+        "EMBEDDED_LINUX_TEMPLATE_ENABLE_IPO": false
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "dev", "configurePreset": "dev" },
+    { "name": "release", "configurePreset": "release" },
+    { "name": "analysis", "configurePreset": "analysis" },
+    { "name": "coverage", "configurePreset": "coverage" },
+    { "name": "sanitizers", "configurePreset": "sanitizers" },
+    { "name": "docs", "configurePreset": "docs" },
+    { "name": "ci", "configurePreset": "ci" },
+    { "name": "arm64-release", "configurePreset": "arm64-release" },
+    { "name": "armv7-release", "configurePreset": "armv7-release" }
+  ],
+  "testPresets": [
+    {
+      "name": "dev",
+      "configurePreset": "dev",
+      "environment": {
+        "TMPDIR": "${sourceDir}/build/dev/tmp",
+        "XDG_RUNTIME_DIR": "${sourceDir}/build/dev/tmp"
+      },
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error" }
+    },
+    {
+      "name": "coverage",
+      "configurePreset": "coverage",
+      "environment": {
+        "TMPDIR": "${sourceDir}/build/coverage/tmp",
+        "XDG_RUNTIME_DIR": "${sourceDir}/build/coverage/tmp"
+      },
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error" }
+    },
+    {
+      "name": "sanitizers",
+      "configurePreset": "sanitizers",
+      "environment": {
+        "TMPDIR": "${sourceDir}/build/sanitizers/tmp",
+        "XDG_RUNTIME_DIR": "${sourceDir}/build/sanitizers/tmp"
+      },
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error" }
+    },
+    {
+      "name": "ci",
+      "configurePreset": "ci",
+      "environment": {
+        "TMPDIR": "${sourceDir}/build/ci/tmp",
+        "XDG_RUNTIME_DIR": "${sourceDir}/build/ci/tmp"
+      },
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error" }
+    }
+  ],
+  "packagePresets": [
+    { "name": "release", "configurePreset": "release" },
+    { "name": "arm64-release", "configurePreset": "arm64-release" },
+    { "name": "armv7-release", "configurePreset": "armv7-release" }
+  ],
+  "workflowPresets": [
+    {
+      "name": "dev-verify",
+      "steps": [
+        { "type": "configure", "name": "dev" },
+        { "type": "build", "name": "dev" },
+        { "type": "test", "name": "dev" }
+      ]
+    },
+    {
+      "name": "sanitizer-verify",
+      "steps": [
+        { "type": "configure", "name": "sanitizers" },
+        { "type": "build", "name": "sanitizers" },
+        { "type": "test", "name": "sanitizers" }
+      ]
+    }
+  ]
+}

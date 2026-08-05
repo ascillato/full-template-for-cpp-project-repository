@@ -1,0 +1,605 @@
+{
+  "folders": [
+    {
+      "name": "Embedded Linux C++ Template",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "cmake.useCMakePresets": "always",
+    "cmake.configureOnOpen": false,
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.buildBeforeRun": true,
+    "cmake.ctest.allowParallelJobs": true,
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/dev/compile_commands.json",
+    "C_Cpp.clang_format_style": "file",
+    "clangd.arguments": [
+      "--background-index",
+      "--clang-tidy",
+      "--compile-commands-dir=${workspaceFolder}/build/dev",
+      "--completion-style=detailed",
+      "--header-insertion=iwyu"
+    ],
+    "[c]": {
+      "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+      "editor.formatOnSave": true
+    },
+    "[cpp]": {
+      "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+      "editor.formatOnSave": true
+    },
+    "cSpell.words": [
+      "armv",
+      "clangd",
+      "cmake",
+      "cppdbg",
+      "crossbuild",
+      "gdbserver",
+      "sysroot"
+    ],
+    "VsCodeTaskButtons.showCounter": false,
+    "VsCodeTaskButtons.tasks": [
+      {
+        "label": "$(settings-gear)",
+        "task": "Configure (dev)",
+        "tooltip": "Configure the development preset"
+      },
+      {
+        "label": "$(gear)",
+        "task": "Build (dev)",
+        "tooltip": "Build the development preset"
+      },
+      {
+        "label": "$(play)",
+        "task": "Run (dev)",
+        "tooltip": "Run the development build"
+      },
+      {
+        "label": "$(beaker)",
+        "task": "Test",
+        "tooltip": "Run the test suite"
+      },
+      {
+        "label": "$(checklist)",
+        "task": "Quality checks",
+        "tooltip": "Run formatting and static-analysis checks"
+      },
+      {
+        "label": "$(book)",
+        "task": "Generate docs",
+        "tooltip": "Generate project documentation"
+      },
+      {
+        "label": "More Tools",
+        "tasks": [
+          {
+            "label": "$(wand) Apply formatting fixes",
+            "task": "Apply formatting fixes",
+            "description": "Format source and project files"
+          },
+          {
+            "label": "$(graph) Coverage",
+            "task": "Coverage",
+            "description": "Generate the test coverage report"
+          },
+          {
+            "label": "$(shield) Sanitizers",
+            "task": "Sanitizers",
+            "description": "Run tests with sanitizers enabled"
+          },
+          {
+            "label": "$(symbol-numeric) Source metrics",
+            "task": "Source metrics",
+            "description": "Count source lines with cloc"
+          },
+          {
+            "label": "$(package) Package release",
+            "task": "Package release",
+            "description": "Build release packages"
+          },
+          {
+            "label": "$(device-mobile) Cross-build ARM64",
+            "task": "Cross-build ARM64",
+            "description": "Cross-compile the ARM64 release preset"
+          },
+          {
+            "label": "$(device-mobile) Cross-build ARMv7",
+            "task": "Cross-build ARMv7",
+            "description": "Cross-compile the ARMv7 release preset"
+          },
+          {
+            "label": "$(remote) Deploy ARM64",
+            "task": "Deploy ARM64",
+            "description": "Deploy the ARM64 build to a prompted target"
+          },
+          {
+            "label": "$(beaker-stop) Clean test results",
+            "task": "Clean test results",
+            "description": "Remove coverage and CTest result files"
+          },
+          {
+            "label": "$(book) Clean docs",
+            "task": "Clean docs",
+            "description": "Remove generated documentation"
+          },
+          {
+            "label": "$(package) Clean packages",
+            "task": "Clean packages",
+            "description": "Remove generated package archives"
+          },
+          {
+            "label": "$(trash) Clean",
+            "task": "Clean",
+            "description": "Remove generated build artifacts"
+          }
+        ]
+      },
+      {
+        "label": "$(terminal)",
+        "task": "New terminal",
+        "tooltip": "Open a new terminal in the workspace"
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.cmake-tools",
+      "ms-vscode.cpptools",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "spencerwmiles.vscode-task-buttons",
+      "streetsidesoftware.code-spell-checker",
+      "ms-vscode-remote.remote-containers"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Configure (dev)",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "configure"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Configure the development CMake preset."
+      },
+      {
+        "label": "Build (dev)",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "build"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Build the development CMake preset."
+      },
+      {
+        "label": "Run (dev)",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "run"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Run the development binary."
+      },
+      {
+        "label": "Test",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "test"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Run the host test suite."
+      },
+      {
+        "label": "Quality checks",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "check"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Run formatting and static-analysis checks."
+      },
+      {
+        "label": "Apply formatting fixes",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "format"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Apply automatic formatting fixes."
+      },
+      {
+        "label": "Coverage",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "coverage"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Generate the test coverage report."
+      },
+      {
+        "label": "Sanitizers",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "sanitize"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Run the sanitizer-enabled test suite."
+      },
+      {
+        "label": "Generate docs",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "docs"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Generate the project documentation."
+      },
+      {
+        "label": "Source metrics",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "metrics"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Count source lines with cloc."
+      },
+      {
+        "label": "Package release",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "package"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Build release packages."
+      },
+      {
+        "label": "Cross-build ARM64",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "cross-arm64"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Cross-compile the ARM64 release preset."
+      },
+      {
+        "label": "Cross-build ARMv7",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "cross-armv7"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Cross-compile the ARMv7 release preset."
+      },
+      {
+        "label": "Deploy ARM64",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "deploy",
+          "TARGET_HOST=${input:targetHost}"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Deploy the ARM64 release build to the prompted target."
+      },
+      {
+        "label": "Clean test results",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "tests-clean"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Remove coverage and CTest result files."
+      },
+      {
+        "label": "Clean docs",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "docs-clean"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Remove generated documentation."
+      },
+      {
+        "label": "Clean packages",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "package-clean"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Remove generated package archives."
+      },
+      {
+        "label": "Clean",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "clean"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Remove generated build artifacts."
+      },
+      {
+        "label": "New terminal",
+        "type": "shell",
+        "command": "${command:workbench.action.terminal.newInActiveWorkspace}",
+        "problemMatcher": [],
+        "detail": "Open a repeatable new terminal in the active workspace."
+      }
+    ],
+    "inputs": [
+      {
+        "id": "targetHost",
+        "type": "promptString",
+        "description": "ARM64 SSH target (host or user@host)",
+        "default": "user@device.local"
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug host (dev)",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/dev/bin/embedded-linux-template",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb",
+        "setupCommands": [
+          {
+            "description": "Enable GDB pretty-printing",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "Build (dev)"
+      },
+      {
+        "name": "Debug ARM64 (gdbserver)",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/arm64-release/bin/embedded-linux-template",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb-multiarch",
+        "miDebuggerServerAddress": "${input:gdbServerHost}:${input:gdbServerPort}",
+        "targetArchitecture": "arm64",
+        "stopAtConnect": true,
+        "setupCommands": [
+          {
+            "description": "Enable GDB pretty-printing",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "Cross-build ARM64"
+      }
+    ],
+    "inputs": [
+      {
+        "id": "gdbServerHost",
+        "type": "promptString",
+        "description": "ARM64 gdbserver hostname or IP address",
+        "default": "device.local"
+      },
+      {
+        "id": "gdbServerPort",
+        "type": "promptString",
+        "description": "ARM64 gdbserver TCP port",
+        "default": "2345"
+      }
+    ]
+  }
+}

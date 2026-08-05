@@ -1,0 +1,36 @@
+:root {
+  --template-accent: #2f81f7;
+  --template-code-background: #f5f7fa;
+}
+
+.wy-side-nav-search,
+.wy-nav-top {
+  background: #16324f;
+}
+
+.wy-nav-content {
+  max-width: 1080px;
+}
+
+.rst-content code.literal,
+.rst-content tt.literal {
+  background: var(--template-code-background);
+  border: 1px solid #d8dee4;
+  color: #24292f;
+  padding: 0.1rem 0.25rem;
+}
+
+.rst-content a {
+  color: var(--template-accent);
+}
+
+.rst-content table.docutils td,
+.rst-content table.docutils th {
+  white-space: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --template-code-background: #20252b;
+  }
+}

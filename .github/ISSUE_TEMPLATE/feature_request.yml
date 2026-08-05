@@ -1,0 +1,86 @@
+name: Feature request
+description: Propose a scoped improvement to the generic repository template
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Explain the reusable problem before proposing implementation details. Board- or vendor-only
+        behavior should normally live in a project created from this template.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What generic embedded Linux development problem is not covered today?
+      placeholder: Describe who encounters the problem and its practical impact.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the desired behavior and command or API surface.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include workarounds, external tools, and reasons they are insufficient.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Primary area
+      options:
+        - C++ API or sample application
+        - CMake or presets
+        - Cross-compilation
+        - Tests or coverage
+        - Static analysis or formatting
+        - Documentation
+        - Visual Studio Code
+        - Development container
+        - Continuous integration or releases
+        - Community or repository hygiene
+    validations:
+      required: true
+
+  - type: textarea
+    id: portability
+    attributes:
+      label: Portability and compatibility
+      description: Explain effects on C++20, CMake 3.25, native builds, AArch64, Armv7, vendor SDKs, and existing users.
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Proposed validation
+      description: What tests or checks would demonstrate that the feature works?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add diagrams, references, or examples if useful.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and discussions for this request.
+          required: true
+        - label: The proposal is useful beyond one private board or vendor SDK.
+          required: true
+        - label: I have identified any new dependencies or compatibility costs.
+          required: true

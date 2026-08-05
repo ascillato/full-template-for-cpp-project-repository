@@ -1,0 +1,19 @@
+{
+  "version": 6,
+  "include": ["CMakePresets.json"],
+  "configurePresets": [
+    {
+      "name": "vendor-sdk-release",
+      "displayName": "Vendor SDK release (local example)",
+      "inherits": "release",
+      "binaryDir": "${sourceDir}/build/vendor-sdk-release",
+      "toolchainFile": "${sourceDir}/cmake/toolchains/custom-sdk.cmake"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "vendor-sdk-release",
+      "configurePreset": "vendor-sdk-release"
+    }
+  ]
+}

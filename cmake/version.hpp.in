@@ -1,0 +1,9 @@
+#pragma once
+
+#include <string_view>
+
+namespace embedded_linux_template {
+
+inline constexpr std::string_view version{"@PROJECT_VERSION@"};
+
+}  // namespace embedded_linux_template

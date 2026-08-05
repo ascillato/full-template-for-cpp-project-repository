@@ -1,0 +1,5 @@
+[codespell]
+skip = .git,.venv,build,.cache,.clangd,CMakeUserPresets.json,docs/_build
+check-filenames =
+check-hidden =
+ignore-words-list = crate,nd,ue

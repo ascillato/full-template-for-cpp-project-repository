@@ -1,0 +1,48 @@
+name: Stale
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: stale-maintenance
+  cancel-in-progress: false
+
+jobs:
+  stale:
+    name: Mark inactive discussions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Mark and close inactive issues and pull requests
+        uses: actions/stale@v11
+        with:
+          days-before-issue-stale: 180
+          days-before-issue-close: 30
+          days-before-pr-stale: 90
+          days-before-pr-close: 30
+          stale-issue-label: stale
+          stale-pr-label: stale
+          exempt-issue-labels: pinned,security,roadmap
+          exempt-pr-labels: pinned,security,work-in-progress
+          exempt-all-assignees: true
+          stale-issue-message: >-
+            This issue has been inactive for six months. Add current context or
+            remove the stale label if it is still actionable.
+          close-issue-message: >-
+            Closing after another month without activity. It can be reopened
+            when there is new information or a proposed implementation.
+          stale-pr-message: >-
+            This pull request has been inactive for three months. Please rebase
+            it and confirm that you intend to continue.
+          close-pr-message: >-
+            Closing after another month without activity. A refreshed pull
+            request is welcome when the work is ready to continue.
+          delete-branch: false
+          operations-per-run: 50

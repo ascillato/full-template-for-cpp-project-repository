@@ -1,0 +1,23 @@
+{
+  "name": "Embedded Linux C++",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "USER_UID": "1000",
+      "USER_GID": "1000"
+    }
+  },
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "init": true,
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt=seccomp=unconfined"
+  ],
+  "containerEnv": {
+    "CCACHE_DIR": "/home/vscode/.cache/ccache",
+    "CONAN_HOME": "/home/vscode/.conan2"
+  },
+  "postCreateCommand": "conan profile detect --force"
+}
