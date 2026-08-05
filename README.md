@@ -1,0 +1,1 @@
+# full-template-for-cpp-project-repository
