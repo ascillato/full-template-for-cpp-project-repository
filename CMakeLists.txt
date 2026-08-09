@@ -8,6 +8,10 @@ project(
     LANGUAGES CXX
 )
 
+# This project uses C++20 but not C++ modules. Disable CMake's automatic module
+# dependency scanning so compile databases remain directly usable by clang-tidy.
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
     message(FATAL_ERROR "In-source builds are not supported. Use a CMake preset or a separate build directory.")
 endif()
