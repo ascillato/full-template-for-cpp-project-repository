@@ -15,7 +15,6 @@ RUN apt-get update \
         ca-certificates \
         ccache \
         clang \
-        clang-format \
         clang-tidy \
         clang-tools \
         clangd \

@@ -28,9 +28,3 @@
 .rst-content table.docutils th {
   white-space: normal;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --template-code-background: #20252b;
-  }
-}
