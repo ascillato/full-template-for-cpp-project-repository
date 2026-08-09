@@ -1,8 +1,8 @@
 # Reproducible Python 3.10+ tooling for local development and CI.
-conan==2.31.1
+conan==2.31.2
 gcovr==8.6
 codespell==2.4.3
-pre-commit==4.6.0
+pre-commit==4.6.1
 # Keep local, container, pre-commit, and CI formatting output identical.
 clang-format==22.1.8
 
