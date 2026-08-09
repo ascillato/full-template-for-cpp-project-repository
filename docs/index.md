@@ -52,6 +52,8 @@ artifacts are intentionally kept separate.
 | Configure and build a debug binary | `make build` |
 | Run all native tests | `make test` |
 | Run the aggregate quality checks | `make check` |
+| Run pre-commit against staged files | `make pre-commit` |
+| Run the same all-files pre-commit gate as CI | `make pre-commit-all` |
 | Check formatting without changing files | `make format-check` |
 | Run clang-tidy analysis | `make tidy` |
 | Run cppcheck analysis | `make cppcheck` |

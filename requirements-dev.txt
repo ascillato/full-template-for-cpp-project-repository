@@ -3,6 +3,8 @@ conan==2.31.1
 gcovr==8.6
 codespell==2.4.3
 pre-commit==4.6.0
+# Keep local, container, pre-commit, and CI formatting output identical.
+clang-format==22.1.8
 
 # Documentation dependencies are repeated here so `make bootstrap` and the
 # development container provide a complete environment. The documentation's
