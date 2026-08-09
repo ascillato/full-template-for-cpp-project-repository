@@ -63,9 +63,10 @@ make test
 make docs
 ```
 
-The aggregate `check` target runs formatting, clang-tidy, cppcheck, spelling, and shell-script
-checks. Individual targets are available as `format-check`, `tidy`, `cppcheck`, `spelling`, and
-`shellcheck` when iterating on one class of diagnostic.
+The aggregate `check` target runs the same all-files pre-commit gate as CI, followed by clang-tidy
+and cppcheck. Use `make pre-commit` for staged files, `make pre-commit-all` for all repository
+files, or the `format-check`, `tidy`, `cppcheck`, `spelling`, and `shellcheck` targets when iterating
+on one class of diagnostic.
 
 If a change can affect target compilation, also run the relevant cross-build:
 
