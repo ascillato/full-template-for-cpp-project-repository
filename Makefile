@@ -13,10 +13,11 @@ endif
 
 BUILD_PARALLEL := --parallel $(JOBS)
 TEST_PARALLEL := --parallel $(JOBS)
+CHECK_TARGETS := pre-commit-all tidy cppcheck
 
 .PHONY: all bootstrap build check check-strict clean configure conan-install consumer-test coverage cppcheck \
 	deploy docs docs-clean format format-check help install metrics package package-clean run sanitize \
-	shellcheck spelling test tests-clean tidy verify cross-arm64 cross-armv7
+	pre-commit pre-commit-all shellcheck spelling test tests-clean tidy verify cross-arm64 cross-armv7
 
 all: build ## Configure and build the native development preset
 
@@ -58,7 +59,24 @@ cppcheck: ## Run the independent cppcheck analyzer
 shellcheck: ## Check repository shell scripts
 	shellcheck scripts/*.sh
 
-check: format-check spelling tidy cppcheck shellcheck ## Run all formatting and static-analysis gates
+pre-commit: ## Run pre-commit hooks against staged files
+	pre-commit run --show-diff-on-failure
+
+pre-commit-all: ## Run pre-commit hooks against all repository files
+	pre-commit run --all-files --show-diff-on-failure
+
+check: ## Run all formatting and static-analysis gates
+	@set -u; \
+	for target in $(CHECK_TARGETS); do \
+		printf '\n==> Running %s\n' "$$target"; \
+		if $(MAKE) --no-print-directory "$$target"; then \
+			printf '==> Passed: %s\n' "$$target"; \
+		else \
+			status=$$?; \
+			printf '==> FAILED: %s (exit %s)\n' "$$target" "$$status" >&2; \
+			exit "$$status"; \
+		fi; \
+	done
 
 check-strict: check ## Alias used when every quality tool must be present
 

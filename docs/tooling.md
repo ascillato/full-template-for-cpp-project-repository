@@ -12,6 +12,7 @@ quality, reports, documentation, and cross-compilation.
 | GCC or Clang | Native C++20 compilation | `make build` |
 | Catch2 and CTest | Unit discovery and test execution | `make test` |
 | clang-format | Source formatting | `make format` |
+| pre-commit | Reproduce repository-wide file gates | `make pre-commit-all` |
 | clang-tidy | Compiler-aware static analysis | `make tidy` |
 | cppcheck | Complementary portability and defect checks | `make cppcheck` |
 | codespell | Documentation and source spelling | `make spelling` |
@@ -28,10 +29,12 @@ quality, reports, documentation, and cross-compilation.
 
 ## Checks and optional tools
 
-`make check` runs the formatting, clang-tidy, cppcheck, spelling, and shell-script checks used by
-CI. Run `make format-check`, `make tidy`, `make cppcheck`, `make spelling`, or `make shellcheck` to
-isolate one check. Missing tools must produce an actionable diagnostic and must never be silently
-treated as a successful CI check.
+`make check` runs the all-files pre-commit gate followed by clang-tidy and cppcheck, matching the
+quality job in CI. The pre-commit gate includes formatting, spelling, and shell-script checks. Run
+`make pre-commit` for staged files or `make pre-commit-all` for the whole repository. Run
+`make format-check`, `make tidy`, `make cppcheck`, `make spelling`, or `make shellcheck` to isolate
+one check. Missing tools must produce an actionable diagnostic and must never be silently treated
+as a successful CI check.
 
 `make tidy` configures the `analysis` preset before analyzing its compile database. `make sanitize`
 configures, builds, and tests the `sanitizers` preset.

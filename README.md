@@ -60,11 +60,14 @@ Ubuntu-based native host, install the additional system tools and then bootstrap
 tools:
 
 ```bash
-sudo apt-get install clang-format clang-tidy cloc cppcheck doxygen graphviz shellcheck
+sudo apt-get install clang-tidy cloc cppcheck doxygen graphviz shellcheck
 make bootstrap
 make check
 make docs
 ```
+
+`make bootstrap` installs the pinned clang-format release used by Make, pre-commit, the development
+container, and CI, so every environment evaluates the same formatting rules.
 
 ## VS Code status-bar workflow
 
@@ -72,9 +75,9 @@ Open `Embedded-Linux-Template.code-workspace` and install the recommended extens
 prompts. The `spencerwmiles.vscode-task-buttons` extension reads the workspace configuration and
 adds these actions to the bottom status bar:
 
-- Configure, build, run, test, quality checks, and documentation.
-- A **More Tools** menu for formatting, metrics, coverage, sanitizers, packaging, both cross
-  builds, deployment, and granular cleaning.
+- Configure, build, run, test, quality checks, all-files pre-commit, and documentation.
+- A **More Tools** menu for staged pre-commit, formatting, metrics, coverage, sanitizers,
+  packaging, both cross builds, deployment, and granular cleaning.
 - A new-terminal button.
 
 The `.code-workspace` file is the repository's single source of truth for VS Code settings,
@@ -97,7 +100,9 @@ Run `make help` for the authoritative list.
 | `make run` | Build and run the native sample |
 | `make test` | Build and run CTest with empty-suite detection |
 | `make verify` | Check formatting, build, and test |
-| `make check` | Run format, spelling, clang-tidy, cppcheck, and shellcheck gates |
+| `make check` | Run all-files pre-commit, clang-tidy, and cppcheck gates |
+| `make pre-commit` | Run pre-commit hooks against staged files |
+| `make pre-commit-all` | Run the same repository-wide pre-commit gate as CI |
 | `make format` | Apply clang-format |
 | `make sanitize` | Run the tests with AddressSanitizer and UBSan |
 | `make coverage` | Write reports under `build/coverage` |

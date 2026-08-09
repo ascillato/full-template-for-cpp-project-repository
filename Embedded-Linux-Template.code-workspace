@@ -67,6 +67,11 @@
         "tooltip": "Run formatting and static-analysis checks"
       },
       {
+        "label": "$(git-commit)",
+        "task": "Pre-commit (all files)",
+        "tooltip": "Run all pre-commit hooks against the repository"
+      },
+      {
         "label": "$(book)",
         "task": "Generate docs",
         "tooltip": "Generate project documentation"
@@ -74,6 +79,11 @@
       {
         "label": "More Tools",
         "tasks": [
+          {
+            "label": "$(git-commit) Pre-commit staged files",
+            "task": "Pre-commit (staged files)",
+            "description": "Run pre-commit hooks against staged files"
+          },
           {
             "label": "$(wand) Apply formatting fixes",
             "task": "Apply formatting fixes",
@@ -262,6 +272,44 @@
           "clear": true
         },
         "detail": "Run formatting and static-analysis checks."
+      },
+      {
+        "label": "Pre-commit (all files)",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "pre-commit-all"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Run every pre-commit hook against all repository files, matching CI."
+      },
+      {
+        "label": "Pre-commit (staged files)",
+        "type": "process",
+        "command": "make",
+        "args": [
+          "pre-commit"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated",
+          "focus": true,
+          "clear": true
+        },
+        "detail": "Run pre-commit hooks against staged files."
       },
       {
         "label": "Apply formatting fixes",
