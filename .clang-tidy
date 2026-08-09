@@ -63,7 +63,7 @@ Checks: >
   readability-uniqueptr-delete-release,
   readability-use-anyofallof
 WarningsAsErrors: '*'
-HeaderFilterRegex: '(.*/)?(app|include|src)/.*'
+HeaderFilterRegex: '(.*/)?(app|include/embedded_linux_template|src)/.*'
 FormatStyle: file
 CheckOptions:
   readability-function-size.LineThreshold: '120'

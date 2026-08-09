@@ -33,5 +33,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   pinning clang-format 22.1.8.
 - Clang 18 static analysis failures caused by CMake adding build-time C++ module map response files
   to the analysis compile database even though the project does not use C++ modules.
+- Misleading clang-tidy warning totals in `make check`; the default output now shows actionable
+  project diagnostics without statistics for suppressed system-header diagnostics.
 
 [Unreleased]: https://github.com/ascillato/full-template-for-cpp-project-repository/commits/main

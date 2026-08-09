@@ -25,4 +25,21 @@ if command -v g++ >/dev/null 2>&1; then
     fi
 fi
 
-"${clang_tidy_command}" -p "${build_directory}" "${extra_arguments[@]}" "${sources[@]}"
+tidy_arguments=(--quiet -p "${build_directory}")
+case "${TIDY_SYSTEM_HEADERS:-0}" in
+    0)
+        echo "clang-tidy: reporting diagnostics from project sources and headers."
+        echo "clang-tidy: set TIDY_SYSTEM_HEADERS=1 to include toolchain and system headers."
+        ;;
+    1)
+        tidy_arguments=(--header-filter='.*' --system-headers -p "${build_directory}")
+        echo "clang-tidy: reporting diagnostics from project, toolchain, and system headers."
+        ;;
+    *)
+        echo "TIDY_SYSTEM_HEADERS must be 0 or 1." >&2
+        exit 2
+        ;;
+esac
+
+"${clang_tidy_command}" "${tidy_arguments[@]}" "${extra_arguments[@]}" "${sources[@]}"
+echo "clang-tidy: analysis passed with no reportable diagnostics."

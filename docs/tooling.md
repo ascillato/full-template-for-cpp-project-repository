@@ -39,6 +39,12 @@ as a successful CI check.
 `make tidy` configures the `analysis` preset before analyzing its compile database. `make sanitize`
 configures, builds, and tests the `sanitizers` preset.
 
+Clang-tidy reports every diagnostic from repository sources and public headers. Its default output
+omits statistics for diagnostics suppressed in toolchain and system headers, which are not
+actionable in this repository. To inspect those third-party diagnostics explicitly, run
+`TIDY_SYSTEM_HEADERS=1 make tidy`; this can produce a very large report and may fail because all
+enabled clang-tidy warnings are treated as errors.
+
 Apply automated fixes separately:
 
 ```console
