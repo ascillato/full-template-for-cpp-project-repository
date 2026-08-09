@@ -10,7 +10,18 @@ cross, analysis, test, documentation, and debugging environment.
 
 ### Native Linux host
 
-At minimum, install:
+On Debian or Ubuntu, install the complete native development environment with:
+
+```console
+make setup-native
+```
+
+The target uses `apt` with root privileges or `sudo`, then runs `make bootstrap` for the pinned
+Python environment. Preview its commands without changing the host with
+`NATIVE_SETUP_DRY_RUN=1 make setup-native`. On a minimal host without GNU Make, run
+`./scripts/setup-native.sh` directly instead.
+
+For a manual or non-Debian setup, install at minimum:
 
 - a compiler with C++20 support;
 - CMake 3.25 or newer;

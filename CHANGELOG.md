@@ -20,6 +20,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A single `.code-workspace` file containing all repository VS Code settings, extensions, tasks,
   status-bar buttons, inputs, and debug profiles; `.vscode/` remains ignored for user overrides.
 - Make and VS Code entry points for staged and repository-wide pre-commit runs.
+- An optional `make setup-native` command for installing the complete Debian/Ubuntu host toolchain
+  and pinned Python development environment without the development container.
 
 ### Fixed
 

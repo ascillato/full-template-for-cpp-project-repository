@@ -17,7 +17,7 @@ CHECK_TARGETS := pre-commit-all tidy cppcheck
 
 .PHONY: all bootstrap build check check-strict clean configure conan-install consumer-test coverage cppcheck \
 	deploy docs docs-clean format format-check help install metrics package package-clean run sanitize \
-	pre-commit pre-commit-all shellcheck spelling test tests-clean tidy verify cross-arm64 cross-armv7
+	pre-commit pre-commit-all setup-native shellcheck spelling test tests-clean tidy verify cross-arm64 cross-armv7
 
 all: build ## Configure and build the native development preset
 
@@ -25,6 +25,9 @@ bootstrap: ## Create a local Python environment with development and documentati
 	python3 -m venv .venv
 	.venv/bin/python -m pip install --upgrade pip
 	.venv/bin/python -m pip install -r requirements-dev.txt -r docs/requirements.txt
+
+setup-native: ## Install the complete Debian/Ubuntu native development toolchain
+	./scripts/setup-native.sh
 
 configure: ## Configure PRESET (default: dev)
 	$(CMAKE) --preset "$(PRESET)"

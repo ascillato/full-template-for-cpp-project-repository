@@ -17,9 +17,9 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 The recommended environment is the checked-in development container. In Visual Studio Code, open
 the repository and choose **Dev Containers: Reopen in Container**.
 
-For native Linux development, install a C++20 compiler, CMake 3.25 or newer, Ninja, GNU Make, and
-Git. Additional analysis, documentation, coverage, and cross tools are listed in
-[the tooling guide](docs/tooling.md).
+For native Linux development on Debian or Ubuntu, run `make setup-native` to install the complete
+toolchain. For a manual or non-Debian setup, install a C++20 compiler, CMake 3.25 or newer, Ninja,
+GNU Make, Git, and the additional tools listed in [the tooling guide](docs/tooling.md).
 
 ## Build and test
 

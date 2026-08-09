@@ -6,7 +6,7 @@ ARG USER_GID=${USER_UID}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# OS package revisions intentionally follow the pinned Ubuntu 24.04 repository.
+# OS package revisions intentionally follow the pinned Ubuntu 26.04 repository.
 # hadolint ignore=DL3008
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends \
@@ -59,7 +59,7 @@ RUN python3 -m venv /opt/cpp-template-tools \
         --requirement /tmp/python-requirements/requirements.txt \
     && rm -rf /tmp/python-requirements
 
-# Ubuntu 24.04 reserves UID/GID 1000 for its ubuntu account. Reclaim the requested
+# The Ubuntu base image reserves UID/GID 1000 for its ubuntu account. Reclaim the requested
 # IDs so the default devcontainer arguments work and bind-mounted files keep the
 # host developer's ownership.
 RUN set -eux; \

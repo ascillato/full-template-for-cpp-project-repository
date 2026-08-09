@@ -23,7 +23,7 @@ terminal and in CI.
 - gcovr HTML, XML, and JSON coverage reports with a line-coverage quality gate.
 - Doxygen API extraction and Sphinx/MyST/Breathe project documentation with Mermaid diagrams.
 - Optional Conan 2 recipe and separate build/host profiles for cross dependencies.
-- Ubuntu 24.04 development container with host, cross, QEMU, and GDB tooling.
+- Ubuntu 26.04 development container with host, cross, QEMU, and GDB tooling.
 - GitHub Actions for CI, CodeQL, dependency review, Pages, tagged releases, and maintenance.
 - Community health files, issue forms, pre-commit hooks, and Dependabot configuration.
 - Explicit SSH/rsync deployment and a VS Code `gdbserver` debugging profile.
@@ -42,8 +42,23 @@ CI locally.
 
 ### Native host
 
-The minimum build path requires CMake 3.25, Ninja, a C++20 compiler, Git, and Make. On a Debian- or
-Ubuntu-based host:
+For the complete native environment on a Debian- or Ubuntu-based host, run the explicit setup
+target. It installs host and cross compilers, analysis, documentation, debugging, metrics, QEMU,
+and deployment tools through `apt`, then creates `.venv` with the pinned Python tools:
+
+```bash
+make setup-native
+make test
+make check
+```
+
+This command changes the host and may prompt for `sudo`. Preview every command without making
+changes with `NATIVE_SETUP_DRY_RUN=1 make setup-native`. The installed CMake and Python versions
+must satisfy the repository minimums of CMake 3.25 and Python 3.10. If GNU Make is not installed
+yet, invoke `./scripts/setup-native.sh` directly; the script installs Make before bootstrapping the
+Python environment.
+
+The smaller build-only path requires CMake 3.25, Ninja, a C++20 compiler, Git, and Make:
 
 ```bash
 sudo apt-get install build-essential cmake git ninja-build
@@ -55,19 +70,9 @@ The first test configuration downloads Catch2 at the immutable commit recorded i
 `cmake/Dependencies.cmake`. Set `EMBEDDED_LINUX_TEMPLATE_FETCH_DEPENDENCIES=OFF` when dependencies
 must be supplied by Conan, a system package, or an offline SDK.
 
-For the full quality and documentation toolset, use the dev container. On a Debian- or
-Ubuntu-based native host, install the additional system tools and then bootstrap the pinned Python
-tools:
-
-```bash
-sudo apt-get install clang-tidy cloc cppcheck doxygen graphviz shellcheck
-make bootstrap
-make check
-make docs
-```
-
-`make bootstrap` installs the pinned clang-format release used by Make, pre-commit, the development
-container, and CI, so every environment evaluates the same formatting rules.
+`make bootstrap` installs pinned CMake and clang-format releases used by native development, the
+development container, and CI, so every environment evaluates the same build and formatting
+rules.
 
 ## VS Code status-bar workflow
 
@@ -99,6 +104,7 @@ Run `make help` for the authoritative list.
 | `make build` | Configure and compile the selected preset |
 | `make run` | Build and run the native sample |
 | `make test` | Build and run CTest with empty-suite detection |
+| `make setup-native` | Install the complete Debian/Ubuntu native toolchain and Python environment |
 | `make verify` | Check formatting, build, and test |
 | `make check` | Run all-files pre-commit, clang-tidy, and cppcheck gates |
 | `make pre-commit` | Run pre-commit hooks against staged files |
@@ -149,7 +155,7 @@ CI policy rather than a developer default.
 The working GNU examples are useful for Debian/Ubuntu-style targets and CI:
 
 ```bash
-sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+make setup-native
 make cross-arm64
 file build/arm64-release/bin/embedded-linux-template
 ```

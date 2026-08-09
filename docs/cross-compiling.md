@@ -16,6 +16,9 @@ The standard presets expect these compiler families on the build host:
 The linker, C library, loader, kernel ABI, and third-party libraries must match the target root
 filesystem. A matching compiler alone is not enough.
 
+On Debian or Ubuntu, `make setup-native` installs both compiler families, Ninja, QEMU user-mode,
+and the related native tooling. The development container provides the same cross-build commands.
+
 ## Standard cross-builds
 
 ```console

@@ -29,6 +29,13 @@ quality, reports, documentation, and cross-compilation.
 
 ## Checks and optional tools
 
+On Debian and Ubuntu, `make setup-native` installs the complete tool inventory needed by the
+repository's native workflows, including both GNU Arm cross-compilers, and then creates `.venv`
+with the pinned CMake and Python tools. It is explicit because it installs host packages with
+`apt` and may prompt for `sudo`. Use `NATIVE_SETUP_DRY_RUN=1 make setup-native` to review the
+commands first. On a minimal host without GNU Make, invoke `./scripts/setup-native.sh` directly.
+Other distributions should install equivalent packages manually or use the development container.
+
 `make check` runs the all-files pre-commit gate followed by clang-tidy and cppcheck, matching the
 quality job in CI. The pre-commit gate includes formatting, spelling, and shell-script checks. Run
 `make pre-commit` for staged files or `make pre-commit-all` for the whole repository. Run
