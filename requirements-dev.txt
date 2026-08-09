@@ -7,11 +7,12 @@ pre-commit==4.6.0
 # Documentation dependencies are repeated here so `make bootstrap` and the
 # development container provide a complete environment. The documentation's
 # own requirements file remains the source used by documentation-only jobs.
-Sphinx==8.1.3 ; python_version < "3.12"
+Sphinx==8.1.3 ; python_version < "3.11"
+Sphinx==8.2.3 ; python_version >= "3.11" and python_version < "3.12"
 Sphinx==9.1.0 ; python_version >= "3.12"
 breathe==4.36.0
 myst-parser==4.0.1 ; python_version < "3.11"
 myst-parser==5.1.0 ; python_version >= "3.11"
 sphinxcontrib-mermaid==2.1.0
-sphinx-rtd-theme==3.0.2
+sphinx-rtd-theme==3.1.0
 furo==2025.12.19

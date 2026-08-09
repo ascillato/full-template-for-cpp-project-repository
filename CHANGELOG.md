@@ -22,6 +22,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Documentation CI dependency resolution by pairing Sphinx 9 with a compatible Read the Docs
+  theme release.
 - Inline-code contrast in the generated documentation when the operating system prefers dark
   colors.
 
