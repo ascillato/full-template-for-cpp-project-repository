@@ -1,5 +1,5 @@
 # Reproducible Python 3.10+ tooling for local development and CI.
-cmake==4.4.0
+cmake==4.4.2
 conan==2.31.2
 gcovr==8.6
 lizard==1.23.0
