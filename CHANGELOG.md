@@ -26,6 +26,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   embedded Linux development.
 - A single `version.txt` source for CMake, generated C++ metadata, CPack, Conan, releases, and
   documentation, with the version displayed below the documentation sidebar title.
+- Full-width documentation with a persistent light/dark theme selector and theme-aware source
+  highlighting.
+- Generated documentation metrics covering cloc line counts, C++ complexity, gcovr coverage, and
+  Doxygen API inventory, plus expanded user, developer, CI, release, and project-policy guides.
 
 ### Fixed
 

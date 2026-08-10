@@ -24,7 +24,8 @@ quality, reports, documentation, and cross-compilation.
 | QEMU user-mode | Cross-binary smoke tests in CI | `.github/workflows/ci.yml` |
 | CPack | Release archives | `make package` |
 | shellcheck | Shell-script validation | `make shellcheck` |
-| cloc | Source-line metrics | `make metrics` |
+| cloc | Language and per-file line metrics | `make metrics` |
+| Lizard | C++ function size and cyclomatic-complexity metrics | `make metrics` |
 | SSH and rsync | Explicit target deployment | `make deploy` |
 
 ## Checks and optional tools
@@ -68,8 +69,10 @@ include paths match the build being examined.
 
 1. CMake configures `docs/Doxyfile.in` with source, binary, and project-version paths.
 2. Doxygen validates public API comments and writes XML below `build/docs/doxygen/xml`.
-3. Sphinx reads the Markdown guides, renders Mermaid diagrams, and Breathe reads the Doxygen XML.
-4. Sphinx writes the site to `build/docs/html`.
+3. The metrics generator runs cloc and Lizard and incorporates available coverage and Doxygen API
+   data below `build/metrics`.
+4. Sphinx reads the Markdown guides, renders Mermaid diagrams, and Breathe reads the Doxygen XML.
+5. Sphinx writes the full-width, light/dark-selectable site to `build/docs/html`.
 
 Doxygen warnings are errors. Sphinx should likewise run with warnings promoted to errors in CI.
 

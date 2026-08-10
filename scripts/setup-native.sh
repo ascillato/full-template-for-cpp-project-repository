@@ -125,6 +125,7 @@ required_commands=(
     gdb
     gdb-multiarch
     git
+    lizard
     make
     ninja
     pre-commit

@@ -26,6 +26,7 @@ extensions = [
     "breathe",
     "myst_parser",
     "sphinxcontrib.mermaid",
+    "sphinx_rtd_dark_mode",
 ]
 
 source_suffix = {
@@ -69,12 +70,21 @@ breathe_domain_by_extension = {
 }
 
 html_theme = "sphinx_rtd_theme"
+html_theme_options = {
+    "collapse_navigation": False,
+    "navigation_depth": 4,
+}
 templates_path = ["_templates"]
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
+html_js_files = ["js/theme-accessibility.js"]
 html_title = f"{project} {release}"
 html_show_sourcelink = False
 html_show_sphinx = False
+
+# Start new visitors in dark mode and retain their light/dark choice in local storage.
+default_dark_mode = True
+pygments_style = "sphinx"
 
 linkcheck_ignore = [
     r"http://localhost(?::\d+)?/.*",

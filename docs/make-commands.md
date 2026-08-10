@@ -201,19 +201,21 @@ meaningful assertions.
 ### `make docs`
 
 **How it works:** Configures the `docs` preset, runs Doxygen with warnings treated as errors, then
-uses Sphinx, MyST, Breathe, and Mermaid to write the HTML site to `build/docs/html`. The displayed
-version is read from `version.txt`.
+generates the code-metrics data and uses Sphinx, MyST, Breathe, and Mermaid to write the HTML site
+to `build/docs/html`. The displayed version is read from `version.txt`.
 
 **Why it is useful:** Building API comments and narrative guides together catches stale references,
 invalid diagrams, and undocumented public C++ interfaces before publication.
 
 ### `make metrics`
 
-**How it works:** Runs cloc over the repository while excluding generated builds, Git metadata,
-the Python environment, and caches.
+**How it works:** Generates Markdown and JSON reports below `build/metrics`. cloc measures lines by
+language and file, Lizard measures C++ function complexity, and the generator incorporates gcovr
+coverage and Doxygen API data when those reports already exist.
 
-**Why it is useful:** Language and line-count trends help estimate review and maintenance scope,
-but should not be treated as a productivity or code-quality score.
+**Why it is useful:** Size, complexity, test coverage, and public-API trends identify review and
+refactoring hotspots from complementary perspectives. They are engineering signals, not developer
+productivity scores.
 
 ## Packaging and downstream validation
 
@@ -292,8 +294,8 @@ compiled build tree.
 
 ### `make docs-clean`
 
-**How it works:** Removes the entire generated `build/docs` tree, including Doxygen XML and Sphinx
-HTML.
+**How it works:** Removes the generated `build/docs` and `build/metrics` trees, including Doxygen
+XML, Sphinx HTML, and documentation metrics.
 
 **Why it is useful:** A clean documentation rebuild distinguishes source problems from stale API
 or Sphinx output.

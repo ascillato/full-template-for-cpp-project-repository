@@ -102,7 +102,7 @@
           {
             "label": "$(symbol-numeric) Source metrics",
             "task": "Source metrics",
-            "description": "Count source lines with cloc"
+            "description": "Generate source, complexity, coverage, and API metrics"
           },
           {
             "label": "$(package) Package release",
@@ -408,7 +408,7 @@
           "focus": true,
           "clear": true
         },
-        "detail": "Count source lines with cloc."
+        "detail": "Generate source, complexity, coverage, and API metrics under build/metrics."
       },
       {
         "label": "Package release",

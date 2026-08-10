@@ -95,8 +95,11 @@ docs: ## Generate Doxygen API XML and Sphinx HTML documentation
 	$(CMAKE) --preset docs -DPython3_EXECUTABLE="$(DOCS_PYTHON)"
 	$(CMAKE) --build --preset docs --target docs $(BUILD_PARALLEL)
 
-metrics: ## Print source metrics with cloc
-	cloc --exclude-dir=build,.git,.venv,.cache .
+metrics: ## Generate code metrics reports under build/metrics
+	$(DOCS_PYTHON) scripts/generate-metrics.py \
+		--output-directory build/metrics \
+		--coverage-summary build/coverage/coverage-summary.json \
+		--doxygen-xml build/docs/doxygen/xml
 
 package: ## Build and package the native release as a portable TGZ
 	$(CMAKE) --preset release
@@ -137,6 +140,7 @@ tests-clean: ## Remove coverage and CTest result files
 
 docs-clean: ## Remove generated documentation
 	$(CMAKE) -E remove_directory build/docs
+	$(CMAKE) -E remove_directory build/metrics
 
 package-clean: ## Remove generated package artifacts
 	$(CMAKE) -E remove_directory build/release/packages

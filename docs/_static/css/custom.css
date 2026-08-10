@@ -1,6 +1,17 @@
 :root {
-  --template-accent: #2f81f7;
+  color-scheme: light;
+  --template-accent: #0969da;
   --template-code-background: #f5f7fa;
+  --template-code-border: #d0d7de;
+  --template-code-foreground: #24292f;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --template-accent: #58a6ff;
+  --template-code-background: #161b22;
+  --template-code-border: #30363d;
+  --template-code-foreground: #f0f6fc;
 }
 
 .wy-side-nav-search,
@@ -16,14 +27,14 @@
 }
 
 .wy-nav-content {
-  max-width: 1080px;
+  max-width: 100%;
 }
 
 .rst-content code.literal,
 .rst-content tt.literal {
   background: var(--template-code-background);
-  border: 1px solid #d8dee4;
-  color: #24292f;
+  border: 1px solid var(--template-code-border);
+  color: var(--template-code-foreground);
   padding: 0.1rem 0.25rem;
 }
 
@@ -33,5 +44,156 @@
 
 .rst-content table.docutils td,
 .rst-content table.docutils th {
-  white-space: normal;
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+}
+
+.wy-table-responsive {
+  overflow-x: auto;
+}
+
+.wy-table-responsive table {
+  width: 100%;
+}
+
+html[data-theme="dark"] body .rst-content code.literal,
+html[data-theme="dark"] body .rst-content tt.literal {
+  background: #24272b;
+  border-color: #444c56;
+  color: #e6edf3;
+}
+
+html[data-theme="dark"] body .rst-content a {
+  color: var(--template-accent);
+}
+
+/* Accessible GitHub-dark-inspired Pygments palette for fenced code blocks. */
+html[data-theme="dark"] body .highlight {
+  background: #0d1117;
+  color: #e6edf3;
+}
+
+html[data-theme="dark"] body .highlight .c,
+html[data-theme="dark"] body .highlight .c1,
+html[data-theme="dark"] body .highlight .cm,
+html[data-theme="dark"] body .highlight .cp,
+html[data-theme="dark"] body .highlight .cs {
+  color: #8b949e;
+}
+
+html[data-theme="dark"] body .highlight .k,
+html[data-theme="dark"] body .highlight .kc,
+html[data-theme="dark"] body .highlight .kd,
+html[data-theme="dark"] body .highlight .kn,
+html[data-theme="dark"] body .highlight .kp,
+html[data-theme="dark"] body .highlight .kr,
+html[data-theme="dark"] body .highlight .kt {
+  color: #ff7b72;
+}
+
+html[data-theme="dark"] body .highlight .s,
+html[data-theme="dark"] body .highlight .s1,
+html[data-theme="dark"] body .highlight .s2,
+html[data-theme="dark"] body .highlight .sa,
+html[data-theme="dark"] body .highlight .sb,
+html[data-theme="dark"] body .highlight .sc,
+html[data-theme="dark"] body .highlight .sd,
+html[data-theme="dark"] body .highlight .se,
+html[data-theme="dark"] body .highlight .sh,
+html[data-theme="dark"] body .highlight .si,
+html[data-theme="dark"] body .highlight .sr,
+html[data-theme="dark"] body .highlight .ss,
+html[data-theme="dark"] body .highlight .sx {
+  color: #a5d6ff;
+}
+
+html[data-theme="dark"] body .highlight .m,
+html[data-theme="dark"] body .highlight .mb,
+html[data-theme="dark"] body .highlight .mf,
+html[data-theme="dark"] body .highlight .mh,
+html[data-theme="dark"] body .highlight .mi,
+html[data-theme="dark"] body .highlight .mo,
+html[data-theme="dark"] body .highlight .no {
+  color: #79c0ff;
+}
+
+html[data-theme="dark"] body .highlight .fm,
+html[data-theme="dark"] body .highlight .nf {
+  color: #d2a8ff;
+}
+
+html[data-theme="dark"] body .highlight .nc,
+html[data-theme="dark"] body .highlight .nd,
+html[data-theme="dark"] body .highlight .ne,
+html[data-theme="dark"] body .highlight .nn,
+html[data-theme="dark"] body .highlight .nt {
+  color: #ffa657;
+}
+
+html[data-theme="dark"] body .highlight .o,
+html[data-theme="dark"] body .highlight .ow,
+html[data-theme="dark"] body .highlight .p {
+  color: #e6edf3;
+}
+
+html[data-theme="dark"] body .highlight .gh,
+html[data-theme="dark"] body .highlight .gu {
+  color: #79c0ff;
+}
+
+html[data-theme="dark"] body .highlight .gp {
+  color: #8b949e;
+}
+
+html[data-theme="dark"] body .highlight .go {
+  color: #c9d1d9;
+}
+
+html[data-theme="dark"] body .highlight .gr,
+html[data-theme="dark"] body .highlight .gt {
+  color: #ff7b72;
+}
+
+.theme-switcher:focus-visible {
+  outline: 3px solid #ffd33d;
+  outline-offset: 3px;
+}
+
+.coverage-pct {
+  font-weight: 700;
+}
+
+.coverage-pct--low {
+  color: #cf222e;
+}
+
+.coverage-pct--medium {
+  color: #9a6700;
+}
+
+.coverage-pct--high {
+  color: #1a7f37;
+}
+
+html[data-theme="dark"] .coverage-pct--low {
+  color: #ff7b72;
+}
+
+html[data-theme="dark"] .coverage-pct--medium {
+  color: #d29922;
+}
+
+html[data-theme="dark"] .coverage-pct--high {
+  color: #56d364;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

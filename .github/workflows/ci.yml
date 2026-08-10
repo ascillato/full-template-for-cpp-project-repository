@@ -261,6 +261,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends \
             build-essential \
+            cloc \
             cmake \
             doxygen \
             graphviz \
@@ -274,7 +275,10 @@ jobs:
         run: make docs
 
       - name: Verify documentation entry point
-        run: test -f build/docs/html/index.html
+        run: |
+          test -f build/docs/html/index.html
+          test -f build/docs/html/code-metrics.html
+          test -f build/metrics/summary.json
 
       - name: Upload documentation
         uses: actions/upload-artifact@v7

@@ -17,6 +17,8 @@ goals are:
 
 ```mermaid
 flowchart TD
+    accTitle: Repository component dependency graph
+    accDescr: Public headers feed the core library, which feeds the application and unit tests; the application feeds integration tests.
     public_headers["Public headers<br/>include/embedded_linux_template"]
     core["Reusable core library<br/>src/"]
     application["Command-line application<br/>app/"]

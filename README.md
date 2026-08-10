@@ -115,6 +115,7 @@ is useful in a C++ and embedded Linux workflow.
 | `make sanitize` | Run the tests with AddressSanitizer and UBSan |
 | `make coverage` | Write reports under `build/coverage` |
 | `make docs` | Write the site under `build/docs/html` |
+| `make metrics` | Generate source, complexity, coverage, and API reports under `build/metrics` |
 | `make package` | Write a release `.tar.gz` under `build/release/packages` |
 | `make cross-arm64` | Build and package with `aarch64-linux-gnu-*` |
 | `make cross-armv7` | Build and package with `arm-linux-gnueabihf-*` |
@@ -234,8 +235,8 @@ Install the Python documentation packages, Doxygen, and Graphviz, then build:
 
 ```bash
 make bootstrap
-make docs
 make coverage
+make docs
 ```
 
 - Documentation entry point: `build/docs/html/index.html`
@@ -243,19 +244,25 @@ make coverage
 - Detailed coverage: `build/coverage/html/index.html`
 - Machine-readable coverage: `build/coverage/coverage.xml` and
   `build/coverage/coverage-summary.json`
+- Code metrics: `build/metrics/summary.json` and the generated Code Metrics documentation page
 
 The Pages workflow publishes the same Sphinx output from `main`. Documentation warnings fail the
 build, and coverage fails below the configured line threshold. Markdown files can use standard
 `mermaid` code fences; they render on GitHub, in current VS Code Markdown previews, and in the
 generated documentation site.
 
+The published site uses the full browser width and includes a persistent light/dark theme toggle.
+Its Code Metrics page is refreshed during every documentation build; run `make coverage` first when
+the page should include current test coverage.
+
 ## Current tool strategy
 
 As of August 2026, upstream CMake is 4.4, Conan is 2.31, LLVM is 22.1, Catch2 is 3.15, gcovr is
-8.6, and Doxygen is 1.17. The dev environment and automation are maintained against current tools,
-while the project baseline stays at CMake 3.25 and C++20 for mature embedded SDK support. C++23 can
-be adopted by changing the single `target_compile_features` declaration after confirming every
-shipping toolchain and standard library.
+8.6, Lizard is 1.23, Sphinx is 9.1, and Doxygen is 1.17. The dev environment and automation are
+maintained against current tools, while the project baseline stays at CMake 3.25 and C++20 for
+mature embedded SDK support. C++23 can be adopted by changing the single
+`target_compile_features` declaration after confirming every shipping toolchain and standard
+library.
 
 Production cross-compilers and sysroots should come from the exact Yocto, Buildroot, or vendor SDK
 used to build the target image. The generic GNU cross compilers in this template are examples and

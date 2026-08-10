@@ -28,13 +28,34 @@ function(embedded_linux_template_add_documentation)
     )
 
     add_custom_target(
+        documentation_metrics
+        COMMAND
+            "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/scripts/generate-metrics.py"
+            --output-directory "${PROJECT_SOURCE_DIR}/build/metrics"
+            --coverage-summary "${PROJECT_SOURCE_DIR}/build/coverage/coverage-summary.json"
+            --doxygen-xml "${DOXYGEN_OUTPUT_DIRECTORY}/xml"
+        BYPRODUCTS
+            "${PROJECT_SOURCE_DIR}/build/metrics/summary.json"
+            "${PROJECT_SOURCE_DIR}/build/metrics/cloc-report.md"
+            "${PROJECT_SOURCE_DIR}/build/metrics/complexity-report.md"
+            "${PROJECT_SOURCE_DIR}/build/metrics/coverage-report.md"
+            "${PROJECT_SOURCE_DIR}/build/metrics/api-report.md"
+        DEPENDS
+            doxygen
+            "${PROJECT_SOURCE_DIR}/scripts/generate-metrics.py"
+        WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+        COMMENT "Generating documentation metrics"
+        VERBATIM
+    )
+
+    add_custom_target(
         docs
         COMMAND
             "${CMAKE_COMMAND}" -E env
             "DOXYGEN_XML_DIR=${DOXYGEN_OUTPUT_DIRECTORY}/xml"
             "${Python3_EXECUTABLE}" -m sphinx -W --keep-going -b html
             "${PROJECT_SOURCE_DIR}/docs" "${CMAKE_BINARY_DIR}/html"
-        DEPENDS doxygen
+        DEPENDS documentation_metrics
         WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
         COMMENT "Generating Sphinx HTML documentation"
         VERBATIM

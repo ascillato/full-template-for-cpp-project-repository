@@ -10,15 +10,39 @@ rendered through Breathe.
 
 ```{toctree}
 :maxdepth: 2
-:caption: Guides
+:caption: User guide
 
+overview
+usage
 architecture
+cross-compiling
+```
+
+```{toctree}
+:maxdepth: 2
+:caption: Developer guide
+
 development
 make-commands
-cross-compiling
 testing
 tooling
+documentation
+code-metrics
+continuous-integration
 api
+release-management
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: Project
+
+contributing
+changelog
+security
+support
+code-of-conduct
+license
 ```
 
 ## Quick start
@@ -61,6 +85,7 @@ artifacts are intentionally kept separate.
 | Check documentation and source spelling | `make spelling` |
 | Apply source formatting | `make format` |
 | Build this documentation | `make docs` |
+| Generate source, complexity, coverage, and API metrics | `make metrics` |
 | Generate an instrumented coverage report | `make coverage` |
 | Build and test with sanitizers | `make sanitize` |
 | Build for 64-bit Arm Linux | `make cross-arm64` |

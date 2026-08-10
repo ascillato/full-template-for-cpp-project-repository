@@ -39,6 +39,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends \
             build-essential \
+            cloc \
             cmake \
             doxygen \
             graphviz \
@@ -48,17 +49,33 @@ jobs:
             --requirement requirements-dev.txt \
             --requirement docs/requirements.txt
 
-      - name: Build documentation
-        run: make docs
+      - name: Generate coverage for documentation metrics
+        run: make coverage JOBS=2
+
+      - name: Build documentation and metrics
+        run: make docs JOBS=2
 
       - name: Verify documentation entry point
-        run: test -f build/docs/html/index.html
+        run: |
+          test -f build/docs/html/index.html
+          test -f build/docs/html/code-metrics.html
+          test -f build/metrics/summary.json
 
       - name: Upload documentation for review
         uses: actions/upload-artifact@v7
         with:
           name: documentation-pages
           path: build/docs/html
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload documentation metrics for review
+        uses: actions/upload-artifact@v7
+        with:
+          name: documentation-metrics
+          path: |
+            build/metrics
+            build/coverage/coverage-summary.json
           if-no-files-found: error
           retention-days: 14
 
