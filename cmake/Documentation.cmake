@@ -21,6 +21,7 @@ function(embedded_linux_template_add_documentation)
         DEPENDS
             embedded_linux_template_core
             "${PROJECT_SOURCE_DIR}/docs/Doxyfile.in"
+            "${PROJECT_SOURCE_DIR}/version.txt"
         WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
         COMMENT "Generating Doxygen XML"
         VERBATIM
@@ -31,7 +32,6 @@ function(embedded_linux_template_add_documentation)
         COMMAND
             "${CMAKE_COMMAND}" -E env
             "DOXYGEN_XML_DIR=${DOXYGEN_OUTPUT_DIRECTORY}/xml"
-            "PROJECT_VERSION=${PROJECT_VERSION}"
             "${Python3_EXECUTABLE}" -m sphinx -W --keep-going -b html
             "${PROJECT_SOURCE_DIR}/docs" "${CMAKE_BINARY_DIR}/html"
         DEPENDS doxygen

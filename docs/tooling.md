@@ -73,16 +73,26 @@ include paths match the build being examined.
 
 Doxygen warnings are errors. Sphinx should likewise run with warnings promoted to errors in CI.
 
-For a direct Sphinx invocation, override the generated XML location and displayed project version
-when necessary:
+The documentation version is read directly from the repository-root `version.txt`. For a direct
+Sphinx invocation, override the generated XML location when necessary:
 
 ```console
 DOXYGEN_XML_DIR=../build/docs/doxygen/xml \
-PROJECT_VERSION=0.1.0 \
 sphinx-build -W --keep-going -b html docs build/docs/html
 ```
 
 Relative `DOXYGEN_XML_DIR` values are resolved from the `docs` directory.
+
+### Project version
+
+`version.txt` is the single project-version source and must contain one `vMAJOR.MINOR.PATCH` value.
+CMake removes the leading `v` for its numeric `project(VERSION ...)` value, generated C++ version
+header, install metadata, and CPack archive names. Conan uses the same numeric value. Sphinx keeps
+the tag form and displays it below the project title in the documentation sidebar.
+
+To prepare a release, update `version.txt`, rebuild and test the package and documentation, then
+create a Git tag whose name exactly matches the file. Do not edit generated version headers or
+hard-code the version in CMake, Conan, or Sphinx.
 
 ### Mermaid diagrams
 

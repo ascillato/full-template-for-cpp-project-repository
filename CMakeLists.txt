@@ -1,12 +1,28 @@
 cmake_minimum_required(VERSION 3.25...4.4)
 
+set(EMBEDDED_LINUX_TEMPLATE_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/version.txt")
+if(NOT EXISTS "${EMBEDDED_LINUX_TEMPLATE_VERSION_FILE}")
+    message(FATAL_ERROR "Missing version source: ${EMBEDDED_LINUX_TEMPLATE_VERSION_FILE}")
+endif()
+
+file(READ "${EMBEDDED_LINUX_TEMPLATE_VERSION_FILE}" EMBEDDED_LINUX_TEMPLATE_VERSION_TAG)
+string(STRIP "${EMBEDDED_LINUX_TEMPLATE_VERSION_TAG}" EMBEDDED_LINUX_TEMPLATE_VERSION_TAG)
+if(EMBEDDED_LINUX_TEMPLATE_VERSION_TAG MATCHES "^v([0-9]+)\\.([0-9]+)\\.([0-9]+)$")
+    set(EMBEDDED_LINUX_TEMPLATE_VERSION "${CMAKE_MATCH_1}.${CMAKE_MATCH_2}.${CMAKE_MATCH_3}")
+else()
+    message(FATAL_ERROR "version.txt must contain exactly one vMAJOR.MINOR.PATCH version")
+endif()
+
 project(
     embedded_linux_template
-    VERSION 0.1.0
+    VERSION "${EMBEDDED_LINUX_TEMPLATE_VERSION}"
     DESCRIPTION "A production-minded C++ template for embedded Linux applications"
     HOMEPAGE_URL "https://github.com/ascillato/full-template-for-cpp-project-repository"
     LANGUAGES CXX
 )
+
+# Reconfigure existing build trees automatically after the version source changes.
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${EMBEDDED_LINUX_TEMPLATE_VERSION_FILE}")
 
 # This project uses C++20 but not C++ modules. Disable CMake's automatic module
 # dependency scanning so compile databases remain directly usable by clang-tidy.

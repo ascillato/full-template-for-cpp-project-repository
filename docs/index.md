@@ -14,6 +14,7 @@ rendered through Breathe.
 
 architecture
 development
+make-commands
 cross-compiling
 testing
 tooling
@@ -68,6 +69,7 @@ artifacts are intentionally kept separate.
 | Deploy with explicit target settings | `make deploy` |
 
 Use `make help` for the authoritative target list.
+See {doc}`make-commands` for how every target works and why it belongs in a C++ workflow.
 
 ## Template boundaries
 

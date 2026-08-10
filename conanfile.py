@@ -1,20 +1,22 @@
+import os
+import re
+
 from conan import ConanFile
-from conan.errors import ConanInvalidConfiguration
+from conan.errors import ConanException, ConanInvalidConfiguration
 from conan.tools.build import check_min_cppstd, cross_building
 from conan.tools.cmake import CMake, CMakeConfigDeps, CMakeToolchain, cmake_layout
-from conan.tools.files import copy
-import os
+from conan.tools.files import copy, load
 
 
 class EmbeddedLinuxTemplateRecipe(ConanFile):
     name = "embedded-linux-template"
-    version = "0.1.0"
     package_type = "library"
     license = "MIT"
     url = "https://github.com/ascillato/full-template-for-cpp-project-repository"
     description = "A production-minded C++ template for embedded Linux applications"
     topics = ("cpp", "embedded-linux", "cmake", "template")
     required_conan_version = ">=2.25"
+    exports = "version.txt"
 
     settings = "os", "arch", "compiler", "build_type"
     options = {
@@ -33,6 +35,7 @@ class EmbeddedLinuxTemplateRecipe(ConanFile):
     exports_sources = (
         "CMakeLists.txt",
         "LICENSE",
+        "version.txt",
         "app/*",
         "cmake/*",
         "cmake/toolchains/*",
@@ -41,6 +44,15 @@ class EmbeddedLinuxTemplateRecipe(ConanFile):
         "src/*",
         "tests/*",
     )
+
+    def set_version(self):
+        version_tag = load(self, os.path.join(self.recipe_folder, "version.txt")).strip()
+        version_match = re.fullmatch(r"v([0-9]+\.[0-9]+\.[0-9]+)", version_tag)
+        if version_match is None:
+            raise ConanException(
+                "version.txt must contain exactly one vMAJOR.MINOR.PATCH version"
+            )
+        self.version = version_match.group(1)
 
     def config_options(self):
         if self.settings.os == "Windows":

@@ -39,7 +39,7 @@ library so it can be tested without launching a subprocess.
 The repository has three build interfaces:
 
 1. CMake targets contain the actual dependency graph, compile requirements, installation rules,
-   and generated API version information.
+   and API version information generated from `version.txt`.
 2. `CMakePresets.json` records supported native, instrumentation, and cross configurations.
 3. The Makefile provides short, memorable commands used by developers and VS Code tasks.
 

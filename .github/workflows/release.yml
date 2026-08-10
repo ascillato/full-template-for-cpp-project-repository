@@ -42,6 +42,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Verify version source matches tag
+        run: |
+          version_tag="$(<version.txt)"
+          if [[ "${version_tag}" != "${RELEASE_TAG}" ]]; then
+            echo "version.txt contains ${version_tag}; expected ${RELEASE_TAG}." >&2
+            exit 1
+          fi
+
       - name: Install build tools
         run: |
           sudo apt-get update
@@ -74,7 +82,7 @@ jobs:
               -print \
               -quit)"
             if [[ -z "${package_file}" ]]; then
-              echo "No ${preset} package matches ${RELEASE_TAG}. Update the CMake project version before tagging." >&2
+              echo "No ${preset} package matches ${RELEASE_TAG}. Update version.txt before tagging." >&2
               exit 1
             fi
           done

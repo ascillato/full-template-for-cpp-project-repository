@@ -3,18 +3,24 @@
 from __future__ import annotations
 
 import os
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
 
 DOCS_DIR = Path(__file__).resolve().parent
+REPOSITORY_ROOT = DOCS_DIR.parent
+VERSION_FILE = REPOSITORY_ROOT / "version.txt"
 
 project = "C++ Embedded Linux Repository Template"
 author = "C++ Embedded Linux Repository Template contributors"
 copyright = f"{datetime.now(timezone.utc).year}, {author}"
 
-release = os.environ.get("PROJECT_VERSION", "0.1.0")
-version = release
+release = VERSION_FILE.read_text(encoding="utf-8").strip()
+version_match = re.fullmatch(r"v([0-9]+\.[0-9]+\.[0-9]+)", release)
+if version_match is None:
+    raise RuntimeError("version.txt must contain exactly one vMAJOR.MINOR.PATCH version")
+version = version_match.group(1)
 
 extensions = [
     "breathe",
@@ -63,6 +69,7 @@ breathe_domain_by_extension = {
 }
 
 html_theme = "sphinx_rtd_theme"
+templates_path = ["_templates"]
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 html_title = f"{project} {release}"

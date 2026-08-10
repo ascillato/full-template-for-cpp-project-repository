@@ -96,7 +96,9 @@ disabled.
 
 ## Commands
 
-Run `make help` for the authoritative list.
+Run `make help` for the authoritative list. The
+[complete Make command reference](docs/make-commands.md) explains how every target works and why it
+is useful in a C++ and embedded Linux workflow.
 
 | Command | Result |
 |---|---|
@@ -286,7 +288,9 @@ cross builds, package/install checks, documentation, dependency review, and Code
 minimal permissions and concurrency cancellation.
 
 Tags matching `vMAJOR.MINOR.PATCH` build release artifacts, create SHA-256 checksums, and publish a
-GitHub release.
+GitHub release. `version.txt` is the single version source for CMake, generated C++ metadata,
+packages, Conan, and documentation. Update it first and create a Git tag with exactly the same
+value.
 Before the first release, configure branch protection, GitHub Pages with **GitHub Actions** as its
 source, Dependabot, private vulnerability reporting, and the repository's security settings.
 
@@ -295,8 +299,8 @@ source, Dependabot, private vulnerability reporting, and the repository's securi
 After creating a repository from the template:
 
 1. Rename the CMake project, targets, C++ namespace, include directory, and sample binary.
-2. Update `conanfile.py`, CPack metadata, documentation metadata, badges, URLs, and maintainer
-   contact placeholders.
+2. Set the initial release in `version.txt`, then update CPack metadata, documentation metadata,
+   badges, URLs, and maintainer contact placeholders.
 3. Replace the sample library/application and tests without removing the CI contract.
 4. Replace the GNU example toolchain with the product SDK and record its version/checksum.
 5. Set supported architectures, minimum compiler versions, coverage threshold, and security policy.

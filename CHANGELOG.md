@@ -22,6 +22,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Make and VS Code entry points for staged and repository-wide pre-commit runs.
 - An optional `make setup-native` command for installing the complete Debian/Ubuntu host toolchain
   and pinned Python development environment without the development container.
+- A complete Make target reference describing how every command works and its role in C++ and
+  embedded Linux development.
+- A single `version.txt` source for CMake, generated C++ metadata, CPack, Conan, releases, and
+  documentation, with the version displayed below the documentation sidebar title.
 
 ### Fixed
 

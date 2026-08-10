@@ -104,6 +104,10 @@ make cross-armv7
 Do not edit generated version headers, Doxygen XML, Sphinx HTML, coverage output, CMake caches,
 compile databases, or package staging directories. Change their source configuration and rebuild.
 
+The repository-root `version.txt` is the only source for the project version. It uses the release
+tag form `vMAJOR.MINOR.PATCH`; CMake and Conan remove the leading `v` where a numeric version is
+required. Change this file before a release and use the exact same value for the Git tag.
+
 `make clean` removes only validated repository build outputs. Never use a broad recursive deletion
 to imitate it.
 

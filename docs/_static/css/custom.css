@@ -8,6 +8,13 @@
   background: #16324f;
 }
 
+.template-project-version {
+  color: #ffffff;
+  font-size: 0.85rem;
+  line-height: 1.25;
+  margin: -0.4rem 0 0.8rem;
+}
+
 .wy-nav-content {
   max-width: 1080px;
 }
