@@ -30,6 +30,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   highlighting.
 - Generated documentation metrics covering cloc line counts, C++ complexity, gcovr coverage, and
   Doxygen API inventory, plus expanded user, developer, CI, release, and project-policy guides.
+- Timestamped, colorized Make task states with bold yellow starts, bold red failures, and
+  task-specific green, blue, or yellow completion messages.
 
 ### Fixed
 

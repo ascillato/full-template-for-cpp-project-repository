@@ -12,6 +12,11 @@ Commands use the following optional variables:
   concurrency.
 - deployment-specific variables are described with {ref}`make-deploy`.
 
+Operational tasks print their start action and timestamp in bold yellow. A failed task prints a
+bold red error and passes the underlying command's exit status back to Make. Successful builds,
+tests, packages, and installs finish in bold green; checks, documentation, and reports finish in
+bold blue; setup, runtime, source-modifying, deployment, and cleanup tasks finish in bold yellow.
+
 ## Setup and discovery
 
 ### `make help`
