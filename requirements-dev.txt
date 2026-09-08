@@ -6,7 +6,7 @@ lizard==1.24.0
 codespell==2.4.3
 pre-commit==4.6.2
 # Keep local, container, pre-commit, and CI formatting output identical.
-clang-format==22.1.8
+clang-format==23.1.0
 
 # Documentation dependencies are repeated here so `make bootstrap` and the
 # development container provide a complete environment. The documentation's
