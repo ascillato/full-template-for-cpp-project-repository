@@ -1,6 +1,6 @@
 # Reproducible Python 3.10+ tooling for local development and CI.
-cmake==4.4.2
-conan==2.31.2
+cmake==4.4.3
+conan==2.32.0
 gcovr==8.6
 lizard==1.24.0
 codespell==2.4.3
@@ -17,7 +17,7 @@ Sphinx==9.1.0 ; python_version >= "3.12"
 breathe==4.36.0
 myst-parser==4.0.1 ; python_version < "3.11"
 myst-parser==5.1.0 ; python_version >= "3.11"
-sphinxcontrib-mermaid==2.1.0
+sphinxcontrib-mermaid==2.1.1
 sphinx-rtd-theme==3.1.0
 sphinx-rtd-dark-mode==1.3.0
 furo==2025.12.19
