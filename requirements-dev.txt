@@ -4,7 +4,7 @@ conan==2.33.0
 gcovr==8.6
 lizard==1.24.1
 codespell==2.4.3
-pre-commit==4.6.2
+pre-commit==4.7.0
 # Keep local, container, pre-commit, and CI formatting output identical.
 clang-format==23.1.3
 
