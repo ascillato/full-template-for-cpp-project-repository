@@ -21,6 +21,11 @@ installs it on Debian or Ubuntu, while `make bootstrap` installs only the pinned
 `.venv`. A C++ compiler, Ninja, Doxygen, Graphviz, and `cloc` are system tools and must still be
 available for the complete documentation build.
 
+The Python requirements select compatible Sphinx releases for Python 3.10 and newer. Python 3.12,
+including CI, uses Sphinx 9.1.1; Sphinx 9.2.0 requires Python 3.13 or newer. When updating Sphinx,
+keep the Python version markers in `requirements-dev.txt` and `docs/requirements.txt` aligned with
+the release's Python requirement.
+
 ## Source organization
 
 - Markdown guides live directly under `docs/`.

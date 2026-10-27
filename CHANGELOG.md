@@ -35,6 +35,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Python 3.12 development and CI dependency installation by selecting Sphinx 9.1.1 and reserving
+  Sphinx 9.2.0 for Python 3.13 or newer in both requirements files.
 - `make check` now identifies the failed quality gate and its exit status while preserving the
   tool's diagnostics.
 - Documentation CI dependency resolution by pairing Sphinx 9 with a compatible Read the Docs
