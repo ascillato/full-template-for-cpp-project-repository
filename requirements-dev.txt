@@ -2,7 +2,7 @@
 cmake==4.4.4
 conan==2.34.0
 gcovr==8.8
-lizard==1.25.0
+lizard==1.26.0
 codespell==2.4.3
 pre-commit==4.7.0
 # Keep local, container, pre-commit, and CI formatting output identical.
@@ -18,7 +18,7 @@ Sphinx==9.1.1 ; python_version >= "3.12" and python_version < "3.13"
 Sphinx==9.2.0 ; python_version >= "3.13"
 breathe==5.1.0
 myst-parser==4.0.1 ; python_version < "3.11"
-myst-parser==5.1.0 ; python_version >= "3.11"
+myst-parser==5.2.0 ; python_version >= "3.11"
 sphinxcontrib-mermaid==2.1.1
 sphinx-rtd-theme==3.1.0
 sphinx-rtd-dark-mode==1.3.0
